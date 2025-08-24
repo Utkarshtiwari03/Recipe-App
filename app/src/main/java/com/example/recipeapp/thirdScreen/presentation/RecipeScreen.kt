@@ -3,6 +3,7 @@ package com.example.recipeapp.thirdScreen.presentation
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,17 +39,34 @@ import androidx.core.net.toUri
 @Composable
 fun RecipeScreen(modifier: Modifier = Modifier,state3: State3,Food: String )
 {
-    LazyColumn(modifier = modifier) {
-        item {
-            Text(text = "Recipe of $Food is here",
+    if(state3.RecipeList.isNotEmpty()) {
+        LazyColumn(modifier = modifier) {
+            item {
+                Text(
+                    text = "Recipe of $Food is here",
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp
+                )
+            }
+            items(state3.RecipeList) {
+                RecipeComponent(recipeUI = it)
+            }
+        }
+    }
+    else{
+        Column(modifier= Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center) {
+            Text(text="No recipe found from $Food name\n Kindly check spelling or try again later",
                 fontWeight = FontWeight.Bold,
-                modifier= Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp)
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center)
+
+
         }
-        items(state3.RecipeList) {
-            RecipeComponent(recipeUI = it)
-        }
+
     }
 
 
@@ -70,13 +88,7 @@ fun RecipeComponent(modifier: Modifier = Modifier,recipeUI: RecipeUI) {
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center
         )
-//        Image(
-//            painter = painterResource(R.drawable.brakfast),
-//            contentDescription = "andhe teri ma ki choot",
-//            modifier=Modifier.fillMaxWidth(),
-//            contentScale = ContentScale.Crop,
-//            alignment = Alignment.Center
-//        )
+
         Column(modifier= Modifier.fillMaxSize().padding(10.dp)) {
             val ingredientText = recipeUI.ingredient
                 .filter { it!!.isNotBlank() }

@@ -44,7 +44,9 @@ fun SearchBar(modifier: Modifier = Modifier,
 
     Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Card(
-            modifier = Modifier.weight(1f).padding(12.dp).clickable {},
+            modifier = Modifier.weight(1f).padding(12.dp).clickable {
+                clicked()
+            },
             shape = RoundedCornerShape(24.dp),
             elevation = CardDefaults.cardElevation(10.dp),
         ) {
@@ -52,9 +54,9 @@ fun SearchBar(modifier: Modifier = Modifier,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .clickable {
-                    clicked()
-                    },
+//                    .clickable {
+//                    clicked() }
+                ,
                 verticalAlignment = Alignment.CenterVertically// Row click to make sure TextField area is clickable
             ) {
                 Icon(Icons.Default.Search, contentDescription = "Search")

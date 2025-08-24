@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.example.recipeapp.secondScreen.presentation.components.RecipeCard
 
 @Composable
-fun SecondScreen(modifier: Modifier = Modifier,state: State,region: String?,onClick:(String)-> Unit) {
+fun SecondScreen(modifier: Modifier = Modifier,state: State,region: String?,category:String,onClick:(String)-> Unit) {
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -33,7 +33,7 @@ fun SecondScreen(modifier: Modifier = Modifier,state: State,region: String?,onCl
 
             ) {
             Text(
-                text = if(region==null) "hello" else region,
+                text = if(region==null) category else region,
                 fontSize = 30.sp,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.TopCenter)

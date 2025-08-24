@@ -49,7 +49,7 @@ fun SetUpNav(modifier: Modifier = Modifier) {
                 viewmodel2.getData(args.region,args.category)
             }
             val state2 by viewmodel2.state.collectAsStateWithLifecycle()
-            SecondScreen(modifier = modifier,state = state2, region = args.region, onClick = {
+            SecondScreen(modifier = modifier,state = state2, region = args.region,category=args.category, onClick = {
                 navController.navigate(thirdScreen(it))
             })
         }

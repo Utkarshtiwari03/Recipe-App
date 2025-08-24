@@ -47,7 +47,7 @@ fun StartScreen(modifier: Modifier = Modifier,
 
                 )
             SearchBar(clicked = {
-                SearchClicked
+                SearchClicked()
             })
             {
                 onEvent(StartScreenEvents.getCategory(it))
@@ -82,7 +82,7 @@ fun StartScreen(modifier: Modifier = Modifier,
                         categoryCard(
                             stringResourceId = it.strCategory,
                         ) {
-                            onClick("","c")
+                            onClick("",it)
                         }
                     }
                 }

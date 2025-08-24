@@ -18,4 +18,7 @@ object RetrofitClient{
     val retrfitservice= retrofitinit.create(ApiService::class.java)
 }
 
-
+suspend fun main(){
+    println(RetrofitClient.retrfitservice.getByArea("American").toFoodUI() )
+    println(RetrofitClient.retrfitservice.getByCategory("Breakfast").toFoodUI())
+}
