@@ -15,11 +15,15 @@ class SecondScreenViewModel: ViewModel() {
 
     val repo1: Repository2 = RepositoryImpl2()
 
+    lateinit var region:String
+    lateinit var cat:String
 
-    fun getData(region:String){
+    fun getData(region:String,category:String){
+        this.region =region
+        this.cat=category
         viewModelScope.launch {
             _state.value= state.value.copy(
-                foodList = repo1.getData(region),
+                foodList = repo1.getData(region,category),
                 isLoading = false
             )
         }

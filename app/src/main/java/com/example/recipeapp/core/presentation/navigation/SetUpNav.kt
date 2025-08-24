@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.recipeapp.searchScreen.presentation.SearchScreen
 import com.example.recipeapp.secondScreen.presentation.SecondScreen
 import com.example.recipeapp.thirdScreen.presentation.RecipeScreen
 import com.example.recipeapp.thirdScreen.presentation.viewModel3
@@ -23,14 +24,20 @@ fun SetUpNav(modifier: Modifier = Modifier) {
     val navController= rememberNavController()
     NavHost(navController = navController, startDestination = first_Screen){
 
+
         composable<first_Screen> {
             val viewModel: StartViewModel = viewModel()
+
             val state by viewModel.state.collectAsStateWithLifecycle()
-            StartScreen(modifier = modifier, state = state, onEvent = {
+            StartScreen(
+                modifier = modifier, state = state, onEvent = {
                 viewModel.onEvent(it)
-            },onClick={
-                navController.navigate(second_Screen(region = it))
-            })
+            }, onClick = {region,category->
+                navController.navigate(second_Screen(region =region,category=category))
+            }, SearchClicked = {
+                navController.navigate(search_Screen)
+            }
+            )
         }
 
 
@@ -39,7 +46,7 @@ fun SetUpNav(modifier: Modifier = Modifier) {
             val args=it.toRoute<second_Screen>()
             val viewmodel2: SecondScreenViewModel = viewModel()
             LaunchedEffect(Unit) {
-                viewmodel2.getData(args.region)
+                viewmodel2.getData(args.region,args.category)
             }
             val state2 by viewmodel2.state.collectAsStateWithLifecycle()
             SecondScreen(modifier = modifier,state = state2, region = args.region, onClick = {
@@ -58,6 +65,12 @@ fun SetUpNav(modifier: Modifier = Modifier) {
             }
             RecipeScreen(modifier = modifier,state3=state3,Food=args.Food)
 
+        }
+        composable<search_Screen> {
+            val args=it.toRoute<search_Screen>()
+            SearchScreen(modifier = modifier){
+                navController.navigate(thirdScreen(it))
+            }
         }
     }
 }

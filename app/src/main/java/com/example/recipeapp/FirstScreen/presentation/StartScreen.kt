@@ -1,6 +1,5 @@
 package com.example.recipeapp.FirstScreen.presentation
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,58 +15,82 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipeapp.FirstScreen.presentation.components.categoryCard
+import com.example.recipeapp.FirstScreen.presentation.components.SearchBar
+import com.example.recipeapp.searchScreen.presentation.SearchScreen
 
 
 @Composable
 fun StartScreen(modifier: Modifier = Modifier,
                 state: StartScreenState,
                 onEvent:(StartScreenEvents)->Unit,
-                onClick:(String)-> Unit) {
+                onClick:(String,String)-> Unit,
+                SearchClicked:()-> Unit) {
+
+//    val names= arrayOf("Cusin","Category","Surprise Me","Vegan","Vegetarian")
     Column(modifier= modifier) {
 
         Column(
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                textAlign = TextAlign.Center,
+                text = "What would you like\n to cook today?",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
 
+                )
+            SearchBar(clicked = {
+                SearchClicked
+            })
+            {
+                onEvent(StartScreenEvents.getCategory(it))
+            }
             if (state.isLoading) {
                 CircularProgressIndicator()
             }
             else if (state.areaList.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = "What would you like\n to cook today?",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-
-                    )
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(128.dp),
+                    columns = GridCells.Adaptive(156.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalArrangement = Arrangement.Center,
-                    contentPadding = PaddingValues(10.dp)
+                    contentPadding = PaddingValues(20.dp)
                 ) {
                     items(state.areaList) {
                         categoryCard(
                             stringResourceId = it.strArea,
                         ) {
-                            onClick(it)
+                            onClick(it,"")
+                        }
+                    }
+                }
+            }
+            else if (state.categoryList.isNotEmpty()) {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(156.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalArrangement = Arrangement.Center,
+                    contentPadding = PaddingValues(20.dp)
+                ) {
+                    items(state.categoryList) {
+                        categoryCard(
+                            stringResourceId = it.strCategory,
+                        ) {
+                            onClick("","c")
                         }
                     }
                 }
             }
             else{
-                Text(text = "Oops!! NO Internet Connection")
+                Text(text = "Oops!! No Internet Connection")
                 Button(onClick = {
-                    onEvent(StartScreenEvents.getArea)
+                    onEvent(StartScreenEvents.getCategory("Categories"))
                 }) { Text("Retry")}
             }
         }
