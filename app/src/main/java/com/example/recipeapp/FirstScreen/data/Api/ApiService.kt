@@ -19,7 +19,7 @@ object ApiClient{
     val apiRetrofitClient= retrofitinit.create(ApiService::class.java)
 }
 
-suspend fun main(){
-    println(ApiClient.apiRetrofitClient.getArea().toAreaUI())
-    print(ApiClient.apiRetrofitClient.getCategory().toAreaUIC())
-}
+//suspend fun main(){
+//    println(ApiClient.apiRetrofitClient.getArea().toAreaUI())
+//    print(ApiClient.apiRetrofitClient.getCategory().toAreaUIC())
+//}

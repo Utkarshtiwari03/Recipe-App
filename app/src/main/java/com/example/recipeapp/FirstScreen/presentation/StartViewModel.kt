@@ -18,18 +18,8 @@ class StartViewModel : ViewModel() {
 
     fun onEvent(events: StartScreenEvents){
         when(events){
-            StartScreenEvents.getArea -> {
-                getArea("Cuisine")
-            }
-
             is StartScreenEvents.getCategory ->{
                 getArea(events.Category)
-//                if(events.Category=="Categories"){
-//
-//                }
-//                else{
-//                    getArea()
-//                }
             }
         }
     }

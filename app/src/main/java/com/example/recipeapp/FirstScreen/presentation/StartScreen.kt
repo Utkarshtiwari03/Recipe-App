@@ -43,8 +43,7 @@ fun StartScreen(modifier: Modifier = Modifier,
                 textAlign = TextAlign.Center,
                 text = "What would you like\n to cook today?",
                 fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-
+                fontWeight = FontWeight.Bold
                 )
             SearchBar(clicked = {
                 SearchClicked()
